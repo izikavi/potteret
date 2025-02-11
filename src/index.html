@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+    <meta charset="UTF-8" />
+    <title>פותרת</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="icon" href="favicon.ico" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
+<body>
+    <div id="container">
+        <header>
+            <h1>פותרת - פותר וורדעל</h1>
+            <button id="theme-toggle"><i class="fa-solid fa-moon"></i></button>
+        </header>
+        
+        <section id="green-block">
+            <h2>אותיות ירוקות (מיקום נכון)</h2>
+            <div class="input-row">
+                <input type="text" maxlength="1" class="green-letter" data-pos="0" pattern="[א-ת]" />
+                <input type="text" maxlength="1" class="green-letter" data-pos="1" pattern="[א-ת]" />
+                <input type="text" maxlength="1" class="green-letter" data-pos="2" pattern="[א-ת]" />
+                <input type="text" maxlength="1" class="green-letter" data-pos="3" pattern="[א-ת]" />
+                <input type="text" maxlength="1" class="green-letter" data-pos="4" pattern="[א-ת]" />
+            </div>
+        </section>
+    
+        <section id="yellow-block">
+            <h2>אותיות צהובות (מופיעות במילה אך לא במיקום)</h2>
+            <div class="input-row">
+                <input type="text" maxlength="1" class="yellow-letter" data-row="0" data-col="0" pattern="[א-ת]" />
+                <input type="text" maxlength="1" class="yellow-letter" data-row="0" data-col="1" pattern="[א-ת]" />
+                <input type="text" maxlength="1" class="yellow-letter" data-row="0" data-col="2" pattern="[א-ת]" />
+                <input type="text" maxlength="1" class="yellow-letter" data-row="0" data-col="3" pattern="[א-ת]" />
+                <input type="text" maxlength="1" class="yellow-letter" data-row="0" data-col="4" pattern="[א-ת]" />
+            </div>
+            <div class="input-row">
+                <input type="text" maxlength="1" class="yellow-letter" data-row="1" data-col="0" pattern="[א-ת]" />
+                <input type="text" maxlength="1" class="yellow-letter" data-row="1" data-col="1" pattern="[א-ת]" />
+                <input type="text" maxlength="1" class="yellow-letter" data-row="1" data-col="2" pattern="[א-ת]" />
+                <input type="text" maxlength="1" class="yellow-letter" data-row="1" data-col="3" pattern="[א-ת]" />
+                <input type="text" maxlength="1" class="yellow-letter" data-row="1" data-col="4" pattern="[א-ת]" />
+            </div>
+            <div class="input-row">
+                <input type="text" maxlength="1" class="yellow-letter" data-row="2" data-col="0" pattern="[א-ת]" />
+                <input type="text" maxlength="1" class="yellow-letter" data-row="2" data-col="1" pattern="[א-ת]" />
+                <input type="text" maxlength="1" class="yellow-letter" data-row="2" data-col="2" pattern="[א-ת]" />
+                <input type="text" maxlength="1" class="yellow-letter" data-row="2" data-col="3" pattern="[א-ת]" />
+                <input type="text" maxlength="1" class="yellow-letter" data-row="2" data-col="4" pattern="[א-ת]" />
+            </div>
+            <div class="input-row">
+                <input type="text" maxlength="1" class="yellow-letter" data-row="3" data-col="0" pattern="[א-ת]" />
+                <input type="text" maxlength="1" class="yellow-letter" data-row="3" data-col="1" pattern="[א-ת]" />
+                <input type="text" maxlength="1" class="yellow-letter" data-row="3" data-col="2" pattern="[א-ת]" />
+                <input type="text" maxlength="1" class="yellow-letter" data-row="3" data-col="3" pattern="[א-ת]" />
+                <input type="text" maxlength="1" class="yellow-letter" data-row="3" data-col="4" pattern="[א-ת]" />
+            </div>
+        </section>
+    
+        <section id="grey-block">
+            <h2>אותיות אפורות (לא מופיעות במילה)</h2>
+            <input type="text" id="grey-input" placeholder="אותיות לשלילה" pattern="^[א-ת]*$" />
+        </section>
+    
+        <button id="submit-btn">חפש מילים</button>
+    
+        <section id="results">
+          <h2>מילים אפשריות:</h2>
+          <pre id="result-text"></pre>
+        </section>
+      </div>
+</body>
+</html>
