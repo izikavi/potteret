@@ -5,13 +5,17 @@
     <title>פותרת</title>
     <link rel="stylesheet" href="style.css" />
     <link rel="icon" href="favicon.ico" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
     <div id="container">
         <header>
+            <div>
+                <button id="theme-toggle" onclick="toggleTheme()"><span id="theme-icon" class="material-icons">dark_mode</span></button>
+                <button id="clear-btn"><i class="fa-solid fa-sun"></i></button>
+                <button id="help-toggle"><i class="fa-solid fa-question"></i></button>
+            </div>
             <h1>פותרת - הצעות לוורדעל</h1>
-            <button id="theme-toggle"><i class="fa-solid fa-moon"></i></button>
         </header>
         
         <section id="green-block">
@@ -65,9 +69,10 @@
         <button id="submit-btn">חפש מילים</button>
     
         <section id="results">
-          <h2>מילים אפשריות:</h2>
+          <h2>:מילים אפשריות</h2>
           <pre id="result-text"></pre>
         </section>
-      </div>
+    </div>
+    <script src="script.js"></script>
 </body>
 </html>
