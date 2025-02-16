@@ -1,35 +1,49 @@
-function getCookie(name) {
-  var value = "; " + document.cookie;
-  var parts = value.split("; " + name + "=");
-  if (parts.length == 2) return parts.pop().split(";").shift();
+function getCookie(key) {
+    let cookies = document.cookie.split(";");
+    for (let cookie of cookies) {
+        console.log("cookie: " + cookie);
+        const [name, value] = cookie.trim().split("=");
+        if (name === key) {
+            return value;
+        }
+    }
+    return null;
 }
 
-function setCookie(name, value) {
-  document.cookie = name + "=" + value + "; path=/";
+function setCookie(key, value) {
+    console.log("setCookie - key: " + key + ", value: " + value);
+    document.cookie = key + "=" + value + "; path=/";
+    let cookies = document.cookie.split(";");
+    for (let cookie of cookies) {
+        console.log("cookie: " + cookie);
+    }
 }
 
 function applyTheme() {
-    var theme = getCookie("theme");
+    const theme = getCookie("theme");
+    console.log("applyTheme - theme: " + theme);
     if (theme === "dark") {
-        console.log("Applying dark theme");
         document.body.classList.add("dark");
-        // document.getElementById("theme-toggle").classList.toggle("fa-sun");
-        document.getElementById("theme-icon").textContent = "brightness_7";
+        document.getElementById("theme-toggle").textContent = "Light";
     } else {
-        console.log("Applying light theme");
         document.body.classList.remove("dark");
-        // document.getElementById("theme-toggle").classList.toggle("fa-moon");
+        document.getElementById("theme-toggle").textContent = "Dark";
     }
 }
 
 function toggleTheme() {
-    var theme = getCookie("theme");
+    const theme = getCookie("theme");
+    console.log("toggleTheme - theme: " + theme);
     if (theme === "dark") {
-        console.log("Switching to light theme");
         setCookie("theme", "light");
     } else {
-        console.log("Switching to dark theme");
         setCookie("theme", "dark");
     }
     applyTheme();
 }
+
+
+document.addEventListener("DOMContentLoaded", function() {
+    applyTheme();
+    document.getElementById("theme-toggle").addEventListener("click", toggleTheme);
+});

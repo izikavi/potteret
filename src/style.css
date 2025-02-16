@@ -1,4 +1,4 @@
-:root {
+body {
     --bg-color: #f0f0f0;
     --bg-green-color: #74C365;
     --border-green-color: #00573F;
@@ -25,10 +25,10 @@ body {
     text-align: center;
 }
 
-body.dark {
+/* body.dark {
     background-color: #333;
     color: #fff;
-}
+} */
 
 #container {
     width: 100%;
@@ -41,10 +41,10 @@ body.dark {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-#container.dark {
+/* #container.dark {
     background-color: #444;
     color: #fff;
-}
+} */
 
 header {
     margin-bottom: 20px;
