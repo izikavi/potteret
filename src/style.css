@@ -1,5 +1,5 @@
-body {
-    --bg-color: #f0f0f0;
+:root {
+    --bg-color: #f9f9f9;
     --bg-green-color: #74C365;
     --border-green-color: #00573F;
     --text-color: #333;
@@ -11,7 +11,7 @@ body {
     --bg-color: #070b1b;
     --bg-green-color: #90EE90;
     --border-green-color: #00573F;
-    --text-color: #fff;
+    --text-color: #f9f9f9;
     --bg-yellow-color: #f0e130;
     --border-yellow-color: #bfbf00;
 }
@@ -23,6 +23,7 @@ body {
     padding: 0;
     direction: ltr;
     text-align: center;
+    color: var(--text-color);
 }
 
 /* body.dark {
@@ -31,20 +32,14 @@ body {
 } */
 
 #container {
-    width: 100%;
-    max-width: 800px;
+    width: min(90%, 800px);
     margin: 0 auto;
     padding: 20px;
     text-align: center;
-    background-color: #fff;
+    background-color: var(--bg-color);
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
-
-/* #container.dark {
-    background-color: #444;
-    color: #fff;
-} */
 
 header {
     margin-bottom: 20px;
@@ -73,17 +68,22 @@ header {
     margin-bottom: 15px;
 }
 
-.green-letter, .yellow-letter {
+.green-letter, .yellow-letter, #gray-input {
     font-size: 30px;
     font-weight: bold;
     outline-style: solid;
     outline-width: 2px;
     border-radius: 14px;
+    font-size: 25px;
+    text-align: center;
+}
+
+.green-letter, .yellow-letter {
     width: 50px;
     height: 50px;
-    font-size: 25px;
+    justify-content: center;
+    align-items: center;
     display: flex;
-    text-align: center;
 }
 
 .green-letter {
@@ -94,6 +94,26 @@ header {
 .yellow-letter {
     background-color: var(--bg-yellow-color);
     border-color: var(--border-yellow-color);
+}
+
+#gray-input {
+    background-color: #f9f9f9;
+    border-color: #ccc;
+    padding: 10px;
+}
+
+#gray-block {
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+svg {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    color: var(--text-color);
 }
 
 h1 {
