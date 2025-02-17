@@ -25,11 +25,11 @@
         <section id="green-block">
             <h2>אותיות ירוקות (מיקום נכון)</h2>
             <div class="input-row">
-                <input type="text" maxlength="1" class="green-letter" data-pos="0" pattern="[א-ת]" />
-                <input type="text" maxlength="1" class="green-letter" data-pos="1" pattern="[א-ת]" />
-                <input type="text" maxlength="1" class="green-letter" data-pos="2" pattern="[א-ת]" />
-                <input type="text" maxlength="1" class="green-letter" data-pos="3" pattern="[א-ת]" />
-                <input type="text" maxlength="1" class="green-letter" data-pos="4" pattern="[א-ת]" />
+                <input type="text" maxlength="1" class="green-letter" keypress="checkHeb" data-pos="0" pattern="[\u0590-\u05fe]" />
+                <input type="text" maxlength="1" class="green-letter" keypress="checkHeb" data-pos="1" pattern="[\u0590-\u05fe]" />
+                <input type="text" maxlength="1" class="green-letter" keypress="checkHeb" data-pos="2" pattern="[\u0590-\u05fe]" />
+                <input type="text" maxlength="1" class="green-letter" keypress="checkHeb" data-pos="3" pattern="[\u0590-\u05fe]" />
+                <input type="text" maxlength="1" class="green-letter" keypress="checkHeb" data-pos="4" pattern="[\u0590-\u05fe]" />
             </div>
         </section>
     
@@ -84,17 +84,21 @@
 
     <div id="help-popup" class="popup hidden">
         <h2>הוראות</h2>
-        <p>פותרת הינו כלי עזר לפתרון חידות מילים. מלאו את המידע נכון ותוכלו להצליח בחידה היומית.</p>
-        <ul>
-            <li>אותיות ירוקות - אותיות שנמצאות במילה ובמיקום הנכון.</li>
-            <li>אותיות צהובות - אותיות שנמצאות במילה אך לא במיקום הנכון.</li>
-            <li>אותיות אפורות - אותיות שאינן נמצאות במילה.</li>
-        </ul>
-        <p>הכניסו את האותיות במקומן הנכון והמילים האפשריות יוצגו לכם.</p>
-        <hr class="solid">
-        <p>הקוד ורשימת המילים ברשיון AGPL (רשימת המילים נגזרה מפרויקט <a href="https://github.com/eyaler/hebrew_wordlists">Hspell</a> ומהעבודה של eyaler) וזמין לצפייה <a href="https://github.com/izikavi/potteret">github</a></p>
-        <hr class="solid">
-        <p>כל הזכויות שמורות &copy; Izik Avinoam 2025</p>
+        <div class="under">
+            <p>פותרת הינו כלי עזר לפתרון חידות מילים. מלאו את המידע נכון ותוכלו להצליח בחידה היומית.</p>
+            <ul>
+                <li>אותיות ירוקות - אותיות שנמצאות במילה ובמיקום הנכון.</li>
+                <li>אותיות צהובות - אותיות שנמצאות במילה אך לא במיקום הנכון.</li>
+                <li>אותיות אפורות - אותיות שאינן נמצאות במילה.</li>
+            </ul>
+            <p>הכניסו את האותיות במקומן הנכון והמילים האפשריות יוצגו לכם.</p>
+        </div>
+        <div class="under">
+            <p>הקוד ורשימת המילים ברשיון AGPL<br />
+                רשימת המילים נגזרה מפרויקט Hspell ומהעבודה של eyaler <a href="https://github.com/eyaler/hebrew_wordlists" target="_blank">זמין כאן</a>.<br />
+                קוד המקור לאתר נמצא ב<a href="https://github.com/izikavi/potteret">github</a></p>
+            <p>כל הזכויות שמורות &copy; Izik Avinoam 2025</p>
+        </div>
         <button id="close-help" onclick="helpToggle()">סגור</button>
     </div>
 
