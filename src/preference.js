@@ -20,3 +20,8 @@ function toggleTheme() {
 document.addEventListener("DOMContentLoaded", function() {
     applyTheme();
 });
+
+function helpToggle() {
+    let popup = document.getElementById("help-popup");
+    popup.classList.toggle("hidden");
+}
