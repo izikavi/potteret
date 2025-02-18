@@ -84,7 +84,7 @@ document.getElementById("submit-btn").addEventListener("click", function () {
         }
 
         for (const { letter, col } of yellows) {
-            if (word[col] !== letter) {
+            if (word[col] === letter) {
                 return false;
             }
             if (!word.includes(letter)) {

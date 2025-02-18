@@ -127,14 +127,13 @@ h2 {
 .popup {
     direction: rtl;
     position: fixed;
-    /* top: calc(min(15vw, 9vh)); */
-    /* padding: calc(min(3vw, 1.8vh)); */
-    top: 0;
-    left: 0;
+    top: 40%;
+    left: 50%;
+    translate: -50% -50%;
     padding-top: 50px;
-    border-radius: 15px; /* calc(min(1vw, 0.6vh)); */
-    width: 20%;
-    height: 20%;
+    border-radius: 15px;
+    width: 60%;
+    height: fit-content;
     background-color: var(--bg-color);
     display: flex;
     justify-content: center;
@@ -142,6 +141,13 @@ h2 {
     z-index: 1;
     flex-direction: column;
     box-shadow: 0 0 10px var(--shadow-color);
+}
+
+#close-help {
+    position: absolute;
+    top: 5%;
+    right: 5%;
+    cursor: pointer;
 }
 
 .popup.hidden {
