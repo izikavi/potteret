@@ -47,16 +47,25 @@ document.addEventListener("DOMContentLoaded", function() {
         inputsElements[i].addEventListener("keyup", function(event) {
             let char = event.key.toLocaleLowerCase();
             let letter = LETTERS[char];
+            let maxLength = this.getAttribute("maxlength");
+
             if (letter) {
-                this.value = letter;
+                if (this.value.length < maxLength) {
+                    this.value += letter;
+                } else {
+                    this.value = letter;
+                }
             }
-            this.nextElementSibling.focus();
+            if (this.value.length >= maxLength) {
+                this.nextElementSibling.focus();
+            }
         });
     }
 
     Array.from(inputsElements).forEach(input => {
         input.addEventListener("input", function(event) {
-            if (this.value.length >= 1) {
+            let maxLength = this.getAttribute("maxlength");
+            if (this.value.length >= maxLength) {
                 input.nextElementSibling.focus();
             }
         });
