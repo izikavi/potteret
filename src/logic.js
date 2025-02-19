@@ -7,37 +7,69 @@ function clearAll() {
     }
 }
 
+const LETTERS = {
+    "t" : "א",
+    "c" : "ב",
+    "d" : "ג",
+    "s" : "ד",
+    "v" : "ה",
+    "u" : "ו",
+    "z" : "ז",
+    "j" : "ח",
+    "y" : "ט",
+    "h" : "י",
+    "f" : "כ",
+    "l" : "ך",
+    "k" : "ל",
+    "n" : "מ",
+    "o" : "ם",
+    "b" : "נ",
+    "i" : "ן",
+    "x" : "ס",
+    "g" : "ע",
+    "p" : "פ",
+    ";" : "ף",
+    "m" : "צ",
+    "." : "ץ",
+    "e" : "ק",
+    "r" : "ר",
+    "a" : "ש",
+    "," : "ת"
+};
+
 document.addEventListener("DOMContentLoaded", function() {
     let inputsElements = document.getElementsByTagName("input");
     for (let i = 0; i < inputsElements.length; i++) {
         inputsElements[i].addEventListener("keydown", function(event) {
-            let char = event.key;
-            let val = event.value;
-            const regex = /[\u0590-\u05fe]/;
-            // console.log(" * " + char + " test: " + regex.test(char));
-            // console.log(this);
-        
-            if (regex.test(char)) {
-                // console.log("hebrew");
-            } else {
-                // console.log("not hebrew: " + char);
-                this.value = "";
+            event.preventDefault();
+        });
+
+        inputsElements[i].addEventListener("keyup", function(event) {
+            let char = event.key.toLocaleLowerCase();
+            let letter = LETTERS[char];
+            if (letter) {
+                this.value = letter;
             }
-            // console.log("value: " + this.value);
+            this.nextElementSibling.focus();
         });
     }
+
+    Array.from(inputsElements).forEach(input => {
+        input.addEventListener("input", function(event) {
+            if (this.value.length >= 1) {
+                input.nextElementSibling.focus();
+            }
+        });
+    });
 });
 
-function convertFinaleLetters(letter) {
-    const finaleLetters = {
-        "ך": "כ",
-        "ם": "מ",
-        "ן": "נ",
-        "ף": "פ",
-        "ץ": "צ"
-    };
-    return finaleLetters[letter] || null;
-}
+const FINALE_LETTERS = {
+    "כ" : "ך",
+    "מ": "ם",
+    "נ": "ן",
+    "פ": "ף",
+    "צ": "ץ"
+};
 
 document.getElementById("submit-btn").addEventListener("click", function () {
     const greenInputs = document.querySelectorAll(".green-letter");
@@ -54,10 +86,6 @@ document.getElementById("submit-btn").addEventListener("click", function () {
         let col = input.getAttribute("data-col");
         if (letter !== "") {
             yellows.push({ letter, col: parseInt(col) });
-            let finaleLetter = convertFinaleLetters(letter);
-            if (finaleLetter) {
-                yellows.push({ letter: finaleLetter, col: parseInt(col) });
-            }
         }
     });
 
@@ -67,7 +95,7 @@ document.getElementById("submit-btn").addEventListener("click", function () {
     for (const char of grayInput) {
         if (char.trim() !== "") {
             grays.push(char);
-            let finaleLetter = convertFinaleLetters(char);
+            let finaleLetter = FINALE_LETTERS(char);
             if (finaleLetter) {
                 grays.push(finaleLetter);
             }
@@ -87,7 +115,7 @@ document.getElementById("submit-btn").addEventListener("click", function () {
             if (word[col] === letter) {
                 return false;
             }
-            if (!word.includes(letter)) {
+            if (!word.includes(letter) && (FINALE_LETTERS[letter] && !word.includes(FINALE_LETTERS[letter]))) {
                 return false;
             }
         }
