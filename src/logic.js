@@ -49,6 +49,21 @@ document.addEventListener("DOMContentLoaded", function() {
             let letter = LETTERS[char];
             let maxLength = this.getAttribute("maxlength");
 
+            if (char === "backspace") {
+                this.value = "";
+                this.previousElementSibling.focus();
+            }
+            if (char === "delete") {
+                this.value = "";
+            }
+            if (char === "arrowright") {
+                this.nextElementSibling.focus();
+            }
+            if (char === "arrowleft") {
+                this.previousElementSibling.focus();
+            }
+            
+
             if (letter) {
                 if (this.value.length < maxLength) {
                     this.value += letter;
