@@ -139,7 +139,7 @@ document.getElementById("submit-btn").addEventListener("click", function () {
     for (const char of grayInput) {
         if (char.trim() !== "") {
             grays.push(char);
-            let finaleLetter = FINALE_LETTERS(char);
+            let finaleLetter = FINALE_LETTERS[char];
             if (finaleLetter) {
                 grays.push(finaleLetter);
             }
