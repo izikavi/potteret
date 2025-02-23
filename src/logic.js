@@ -47,28 +47,53 @@ document.addEventListener("DOMContentLoaded", function() {
         inputsElements[i].addEventListener("keyup", function(event) {
             let char = event.key.toLocaleLowerCase();
             let letter = LETTERS[char];
+            let isHebrew = /[א-ת]/.test(char);
+            console.log("char:" + char + " let: " + letter + " isHeb: " + isHebrew);
             let maxLength = this.getAttribute("maxlength");
-
-            if (char === "backspace") {
-                this.value = "";
-                this.previousElementSibling.focus();
-            }
-            if (char === "delete") {
-                this.value = "";
-            }
-            if (char === "arrowright") {
-                this.nextElementSibling.focus();
-            }
-            if (char === "arrowleft") {
-                this.previousElementSibling.focus();
-            }
-            
 
             if (letter) {
                 if (this.value.length < maxLength) {
                     this.value += letter;
                 } else {
                     this.value = letter;
+                }
+            } else if (isHebrew) {
+                if (this.value.length < maxLength) {
+                    this.value += char;
+                } else {
+                    this.value = char;
+                }
+            } else {
+                if (char === "backspace") {
+                    this.value = this.value.slice(0, -1);
+                }
+                if (char === "delete") {
+                    this.value = "";
+                }
+                if (char === "arrowright") {
+                    this.nextElementSibling.focus();
+                }
+                if (char === "arrowleft") {
+                    this.previousElementSibling.focus();
+                }
+                if (char === "arrowup") {
+                    let col = this.getAttribute("data-col");
+                    let nextRow = parseInt(col) - 1;
+                    if (nextRow >= 0) {
+                        let nextInput = document.querySelector(`input[data-col="${nextRow}"]`);
+                        nextInput.focus();
+                    }
+                }
+                if (char === "arrowdown") {
+                    let col = this.getAttribute("data-col");
+                    let nextRow = parseInt(col) + 1;
+                    if (nextRow < 5) {
+                        let nextInput = document.querySelector(`input[data-col="${nextRow}"]`);
+                        nextInput.focus();
+                    }
+                }
+                if (char === "enter") {
+                    document.getElementById("submit-btn").click();
                 }
             }
             if (this.value.length >= maxLength) {
