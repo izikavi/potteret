@@ -47,8 +47,9 @@ document.addEventListener("DOMContentLoaded", function() {
         inputsElements[i].addEventListener("keyup", function(event) {
             let char = event.key.toLocaleLowerCase();
             let letter = LETTERS[char];
-            let isHebrew = /[א-ת]/.test(char);
-            console.log("char:" + char + " let: " + letter + " isHeb: " + isHebrew);
+            if (/[א-ת]/.test(char)) {
+                letter = char;
+            }
             let maxLength = this.getAttribute("maxlength");
 
             if (letter) {
@@ -56,12 +57,6 @@ document.addEventListener("DOMContentLoaded", function() {
                     this.value += letter;
                 } else {
                     this.value = letter;
-                }
-            } else if (isHebrew) {
-                if (this.value.length < maxLength) {
-                    this.value += char;
-                } else {
-                    this.value = char;
                 }
             } else {
                 if (char === "backspace") {
