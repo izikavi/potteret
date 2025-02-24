@@ -13,7 +13,7 @@ function goToNextInput(col, row, isNext) {
         let nextRow = (col === 4) ? row + 1 : row;
         if (nextRow < 5) {
             let nextInput = document.querySelector(`input[data-col="${nextCol}"][data-row="${nextRow}"]`);
-            (nextInput as HTMLElement)?.focus();
+            nextInput.focus();
         } else if (nextRow === 5) {
             document.getElementById("gray-input")?.focus();
         } else {
@@ -24,7 +24,7 @@ function goToNextInput(col, row, isNext) {
         let nextRow = (col === 0) ? row - 1 : row;
         if (nextRow >= 0) {
             let nextInput = document.querySelector(`input[data-col="${nextCol}"][data-row="${nextRow}"]`);
-            (nextInput as HTMLElement)?.focus();
+            nextInput.focus();
         }
     }
 }
@@ -118,7 +118,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 //     }
                 // }
                 if (char === "enter") {
-                    (document.getElementById("submit-btn") as HTMLButtonElement).click();
+                    document.getElementById("submit-btn").click();
                 }
             }
             if (this.value.length >= maxLength) {
@@ -131,23 +131,23 @@ document.addEventListener("DOMContentLoaded", function() {
         input.addEventListener("input", function(event) {
             let maxLength = +(this.getAttribute("maxlength") || 1);
             if (this.value.length >= maxLength) {
-                (input.nextElementSibling as HTMLElement).focus();
+                input.nextElementSibling.focus();
             }
         });
     });
 
     document.getElementById("submit-btn")?.addEventListener("click", function () {
         const greenInputs = document.querySelectorAll(".green-letter");
-        let greens : string[] = [];
+        let greens = [];
         greenInputs.forEach((input, index) => {
-            let val = (input as HTMLInputElement).value.trim();
+            let val = input.value.trim();
             greens[index] = val;
         });
     
         const yellowInputs = document.querySelectorAll(".yellow-letter");
         let yellows = [];
         yellowInputs.forEach((input, index) => {
-            let letter = (input as HTMLInputElement).value.trim();
+            let letter = input.value.trim();
             let col = parseInt(input.getAttribute("data-col")?.toString() || "0");
             if (letter !== "") {
                 yellows.push({ letter, col: (col) });
@@ -155,7 +155,6 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     
         const grayInput = document.getElementById("gray-input").value.trim();
-        console.log(grayInput);
         let grays = [];
         for (const char of grayInput) {
             if (char.trim() !== "") {
@@ -167,6 +166,7 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         }
         grays = [...new Set(grays)];
+        console.log(grayInput);
     
         const SIZE = 5;    
         let result = WORDS.filter(word => {
@@ -180,7 +180,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 if (word[col] === letter) {
                     return false;
                 }
-                if (!word.includes(letter) && (FINALE_LETTERS[letter] && !word.includes(FINALE_LETTERS[letter]))) {
+                if (!word.includes(letter)) {
                     return false;
                 }
             }
