@@ -7,6 +7,28 @@ function clearAll() {
     }
 }
 
+function goToNextInput(col, row, isNext) {
+    if (isNext) {
+        let nextCol = (col === 4) ? 0 : col + 1;
+        let nextRow = (col === 4) ? row + 1 : row;
+        if (nextRow < 5) {
+            let nextInput = document.querySelector(`input[data-col="${nextCol}"][data-row="${nextRow}"]`);
+            (nextInput as HTMLElement)?.focus();
+        } else if (nextRow === 5) {
+            document.getElementById("gray-input")?.focus();
+        } else {
+            document.getElementById("submit-btn")?.click();
+        }
+    } else {
+        let nextCol = (col === 0) ? 4 : col - 1;
+        let nextRow = (col === 0) ? row - 1 : row;
+        if (nextRow >= 0) {
+            let nextInput = document.querySelector(`input[data-col="${nextCol}"][data-row="${nextRow}"]`);
+            (nextInput as HTMLElement)?.focus();
+        }
+    }
+}
+
 const LETTERS = {
     "t" : "א",
     "c" : "ב",
@@ -37,6 +59,14 @@ const LETTERS = {
     "," : "ת"
 };
 
+const FINALE_LETTERS = {
+    "כ" : "ך",
+    "מ": "ם",
+    "נ": "ן",
+    "פ": "ף",
+    "צ": "ץ"
+};
+
 document.addEventListener("DOMContentLoaded", function() {
     let inputsElements = document.getElementsByTagName("input");
     for (let i = 0; i < inputsElements.length; i++) {
@@ -50,7 +80,7 @@ document.addEventListener("DOMContentLoaded", function() {
             if (/[א-ת]/.test(char)) {
                 letter = char;
             }
-            let maxLength = this.getAttribute("maxlength");
+            let maxLength = +(this.getAttribute("maxlength") || 1);
 
             if (letter) {
                 if (this.value.length < maxLength) {
@@ -66,112 +96,105 @@ document.addEventListener("DOMContentLoaded", function() {
                     this.value = "";
                 }
                 if (char === "arrowright") {
-                    this.nextElementSibling.focus();
+                    goToNextInput(+(this.getAttribute("data-col") || 5), +(this.getAttribute("data-row") || 5), true);
                 }
                 if (char === "arrowleft") {
-                    this.previousElementSibling.focus();
+                    goToNextInput(+(this.getAttribute("data-col") || 5), +(this.getAttribute("data-row") || 5), false);
                 }
-                if (char === "arrowup") {
-                    let col = this.getAttribute("data-col");
-                    let nextRow = parseInt(col) - 1;
-                    if (nextRow >= 0) {
-                        let nextInput = document.querySelector(`input[data-col="${nextRow}"]`);
-                        nextInput.focus();
-                    }
-                }
-                if (char === "arrowdown") {
-                    let col = this.getAttribute("data-col");
-                    let nextRow = parseInt(col) + 1;
-                    if (nextRow < 5) {
-                        let nextInput = document.querySelector(`input[data-col="${nextRow}"]`);
-                        nextInput.focus();
-                    }
-                }
+                // if (char === "arrowup") {
+                //     let col = +(this.getAttribute("data-col") || 5);
+                //     let nextRow = col - 1;
+                //     if (nextRow >= 0) {
+                //         let nextInput = document.querySelector(`input[data-col="${nextRow}"]`);
+                //         nextInput.focus();
+                //     }
+                // }
+                // if (char === "arrowdown") {
+                //     let col = this.getAttribute("data-col");
+                //     let nextRow = parseInt(col) + 1;
+                //     if (nextRow < 5) {
+                //         let nextInput = document.querySelector(`input[data-col="${nextRow}"]`);
+                //         nextInput.focus();
+                //     }
+                // }
                 if (char === "enter") {
-                    document.getElementById("submit-btn").click();
+                    (document.getElementById("submit-btn") as HTMLButtonElement).click();
                 }
             }
             if (this.value.length >= maxLength) {
-                this.nextElementSibling.focus();
+                goToNextInput(+(this.getAttribute("data-col") || 5), +(this.getAttribute("data-row") || 5), true);
             }
         });
     }
 
     Array.from(inputsElements).forEach(input => {
         input.addEventListener("input", function(event) {
-            let maxLength = this.getAttribute("maxlength");
+            let maxLength = +(this.getAttribute("maxlength") || 1);
             if (this.value.length >= maxLength) {
-                input.nextElementSibling.focus();
+                (input.nextElementSibling as HTMLElement).focus();
             }
         });
     });
+
+    document.getElementById("submit-btn")?.addEventListener("click", function () {
+        const greenInputs = document.querySelectorAll(".green-letter");
+        let greens : string[] = [];
+        greenInputs.forEach((input, index) => {
+            let val = (input as HTMLInputElement).value.trim();
+            greens[index] = val;
+        });
+    
+        const yellowInputs = document.querySelectorAll(".yellow-letter");
+        let yellows = [];
+        yellowInputs.forEach((input, index) => {
+            let letter = (input as HTMLInputElement).value.trim();
+            let col = parseInt(input.getAttribute("data-col")?.toString() || "0");
+            if (letter !== "") {
+                yellows.push({ letter, col: (col) });
+            }
+        });
+    
+        const grayInput = document.getElementById("gray-input").value.trim();
+        console.log(grayInput);
+        let grays = [];
+        for (const char of grayInput) {
+            if (char.trim() !== "") {
+                grays.push(char);
+                let finaleLetter = FINALE_LETTERS[char];
+                if (finaleLetter) {
+                    grays.push(finaleLetter);
+                }
+            }
+        }
+        grays = [...new Set(grays)];
+    
+        const SIZE = 5;    
+        let result = WORDS.filter(word => {
+            for (let i = 0; i < SIZE; i++) {
+                if (greens[i] && word[i] !== greens[i]) {
+                    return false;
+                }
+            }
+    
+            for (const { letter, col } of yellows) {
+                if (word[col] === letter) {
+                    return false;
+                }
+                if (!word.includes(letter) && (FINALE_LETTERS[letter] && !word.includes(FINALE_LETTERS[letter]))) {
+                    return false;
+                }
+            }
+    
+            for (const letter of grays) {
+                if (word.includes(letter)) {
+                    return false;
+                }
+            }
+    
+            return true;
+        });
+    
+        document.getElementById("result-words").innerText = result.join("\n");
+    });
 });
 
-const FINALE_LETTERS = {
-    "כ" : "ך",
-    "מ": "ם",
-    "נ": "ן",
-    "פ": "ף",
-    "צ": "ץ"
-};
-
-document.getElementById("submit-btn").addEventListener("click", function () {
-    const greenInputs = document.querySelectorAll(".green-letter");
-    let greens = [];
-    greenInputs.forEach((input, index) => {
-        let val = input.value.trim();
-        greens[index] = val;
-    });
-
-    const yellowInputs = document.querySelectorAll(".yellow-letter");
-    let yellows = [];
-    yellowInputs.forEach((input, index) => {
-        let letter = input.value.trim();
-        let col = input.getAttribute("data-col");
-        if (letter !== "") {
-            yellows.push({ letter, col: parseInt(col) });
-        }
-    });
-
-    const grayInput = document.getElementById("gray-input").value.trim();
-    console.log(grayInput);
-    let grays = [];
-    for (const char of grayInput) {
-        if (char.trim() !== "") {
-            grays.push(char);
-            let finaleLetter = FINALE_LETTERS[char];
-            if (finaleLetter) {
-                grays.push(finaleLetter);
-            }
-        }
-    }
-    grays = [...new Set(grays)];
-
-    const SIZE = 5;    
-    let result = WORDS.filter(word => {
-        for (let i = 0; i < SIZE; i++) {
-            if (greens[i] && word[i] !== greens[i]) {
-                return false;
-            }
-        }
-
-        for (const { letter, col } of yellows) {
-            if (word[col] === letter) {
-                return false;
-            }
-            if (!word.includes(letter) && (FINALE_LETTERS[letter] && !word.includes(FINALE_LETTERS[letter]))) {
-                return false;
-            }
-        }
-
-        for (const letter of grays) {
-            if (word.includes(letter)) {
-                return false;
-            }
-        }
-
-        return true;
-    });
-
-    document.getElementById("result-words").innerText = result.join("\n");
-});
