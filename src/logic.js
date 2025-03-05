@@ -60,11 +60,19 @@ const LETTERS = {
 };
 
 const FINALE_LETTERS = {
-    "כ" : "ך",
+    "כ": "ך",
     "מ": "ם",
     "נ": "ן",
     "פ": "ף",
     "צ": "ץ"
+};
+
+const REVERSE_FINALE_LETTERS = {
+    "ך": "כ",
+    "ם": "מ",
+    "ן": "נ",
+    "ף": "פ",
+    "ץ": "צ"
 };
 
 document.addEventListener("DOMContentLoaded", function() {
@@ -149,7 +157,7 @@ document.addEventListener("DOMContentLoaded", function() {
         yellowInputs.forEach((input, index) => {
             let letter = input.value.trim();
             let col = parseInt(input.getAttribute("data-col")?.toString() || "0");
-            if (letter !== "") {
+            if (letter !== "" && !greens.includes(letter)) {
                 yellows.push({ letter, col: (col) });
             }
         });
@@ -163,10 +171,13 @@ document.addEventListener("DOMContentLoaded", function() {
                 if (finaleLetter) {
                     grays.push(finaleLetter);
                 }
+                let reverseFinaleLetter = REVERSE_FINALE_LETTERS[char];
+                if (reverseFinaleLetter) {
+                    grays.push(reverseFinaleLetter);
+                }
             }
         }
         grays = [...new Set(grays)];
-        console.log(grayInput);
     
         const SIZE = 5;    
         let result = WORDS.filter(word => {
@@ -180,7 +191,8 @@ document.addEventListener("DOMContentLoaded", function() {
                 if (word[col] === letter) {
                     return false;
                 }
-                if (!word.includes(letter)) {
+                const finaleLetter = FINALE_LETTERS[letter] || REVERSE_FINALE_LETTERS[letter];
+                if (!word.includes(letter) && !word.includes(finaleLetter)) {
                     return false;
                 }
             }
@@ -193,8 +205,16 @@ document.addEventListener("DOMContentLoaded", function() {
     
             return true;
         });
+
+        let resultWordsString = "";
+        for (let index = 0; index < result.length; index++) {
+            if (index % 4 === 0) {
+                resultWordsString += "\n";
+            }
+            resultWordsString += result[index] + " ";
+        }
     
-        document.getElementById("result-words").innerText = result.join("\n");
+        document.getElementById("result-words").innerText = resultWordsString.trim();
     });
 });
 
